@@ -1,0 +1,36 @@
+version: '3'
+services:
+  # delete all data, for development purposes
+  # helpful when Im changing schema or removing tables
+  # remove when done developing
+  init:
+    image: alpine:latest
+    container_name: init-container
+    volumes:
+      - mysql-data:/var/lib/mysql
+    command: ["sh", "-c", "rm -rf /var/lib/mysql/*"]
+    networks:
+      - tucows-network
+
+  mysql-tucows-db:
+    image: mysql:8.0
+    container_name: mysql-tucows-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tucows
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./migrations:/docker-entrypoint-initdb.d  # mount the migrations directory for automatic execution
+    depends_on:
+      - init
+    networks:
+      - tucows-network
+
+networks:
+  tucows-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

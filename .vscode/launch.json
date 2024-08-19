@@ -5,6 +5,8 @@
     "request": "launch",
     "name": "main.go",
     "program": "${workspaceFolder}/cmd",
-    "env": {}
+    "env": {
+      "LOCAL": "true"
+    }
   }]
 }

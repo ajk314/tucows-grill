@@ -1,1 +1,26 @@
 # tucows-grill
+
+## Overview
+Welcome to the tucows grilling service where we grill cows of all types!
+
+## Endpoints
+The following endpoints are supported:  
+`GET  /ingredients/{id}`  get an ingredient by the ingredient id  
+`POST /ingredients`       add a new ingredient to the db  
+`GET  /total-cost"`       get the total cost of all purchased items for an item id  
+`GET  /total-cost-async`  same as total-cost, but uses batching and concurrency for large requests. Both total-cost endpoints will result in the same calculated value.
+
+## Setup instructions
+1. open docker  
+2. run `docker compose up`  
+3. for logging into the mysql cli, run `mysql -h 127.0.0.1 -P 3306 -u root -p`  
+4. I used vscode, so the launch.json is already configured with a build. Run the `main.go` configuration.  
+
+All requests are authenticated via JWT. See the `tucows-grill-client` repo for more details.  
+
+## TODO:
+- Unit tests  
+- Validation middleware  
+- Service layer (between handler and data layer). The client is just returning whatever the service is grabbing from the db. In a real world scenario, there would be business logic handled in another service that acts as a middleman between the handler and the service call itself.
+- Improve credential security  
+- Grill some burgers!  
