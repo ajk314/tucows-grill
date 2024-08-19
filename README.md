@@ -24,3 +24,17 @@ All requests are authenticated via JWT. See the `tucows-grill-client` repo for m
 - Service layer (between handler and data layer). The client is just returning whatever the service is grabbing from the db. In a real world scenario, there would be business logic handled in another service that acts as a middleman between the handler and the service call itself.
 - Improve credential security  
 - Grill some burgers!  
+
+## Debugging
+When trying to debug locally, if you are getting the error message 
+```
+Failed to continue: "Cannot find Delve debugger. Install from https://github.com/go-delve/delve & ensure it is in your Go tools path, "GOPATH/bin" or "PATH"."
+```
+it may be a dependency conflict with dlv versions in vs code and your current go version (if you didn't have the latest go version). It may be a brew specific problem, but I ran into this on both my macs that were using brew and had an older version of Go installed (< 1.22). If this is the case, try running the following commands:
+```
+go uninstall github.com/go-delve/delve/cmd/dlv@latest
+brew uninstall go
+brew uninstall golangci-lint // only if required to uninstall go
+brew install go
+go install github.com/go-delve/delve/cmd/dlv@latest
+```
